@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Formulario Completo{% endblock %}
+
+{% block head %}
+<!-- Puedes agregar estilos adicionales aquí si es necesario -->
+{% endblock %}
+
+{% block content %}
+<h1 class="title">Formulario Completo</h1>
+
+{% for form_type, form in forms.items %}
+<h2 class="subtitle">{{ form_type|capfirst }}</h2>
+<form method="post" class="box">
+  {% csrf_token %}
+  <input type="hidden" name="form_type" value="{{ form_type }}">
+  {{ form.as_p }}
+  <button type="submit" class="button is-primary">Guardar</button>
+</form>
+<br>
+{% endfor %}
+{% endblock %}
