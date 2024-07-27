@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Confirmar Eliminación</h2>
+<p>¿Estás seguro de que deseas eliminar esta {{ title_singular }}?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="button is-danger">Eliminar</button>
+  <a href="{% url cancel_url %}" class="button is-light">Cancelar</a>
+</form>
+{% endblock %}
