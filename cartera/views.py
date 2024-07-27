@@ -10,14 +10,12 @@ import datetime
 
 class HomeView(View):
     def get(self, request):
-        # Fechas para el rango actual
         today = datetime.date.today()
         first_day_of_month = today.replace(day=1)
         last_day_of_month = (first_day_of_month + datetime.timedelta(days=31)).replace(
             day=1
         ) - datetime.timedelta(days=1)
 
-        # Obtener ingresos y gastos
         ingresos = Ingreso.objects.filter(
             fecha__range=[first_day_of_month, last_day_of_month]
         )
@@ -25,12 +23,10 @@ class HomeView(View):
             fecha__range=[first_day_of_month, last_day_of_month]
         )
 
-        # Calcular total de ingresos y gastos
         total_ingresos = ingresos.aggregate(total=Sum("cantidad"))["total"] or 0
         total_gastos = gastos.aggregate(total=Sum("cantidad"))["total"] or 0
         saldo = total_ingresos - total_gastos
 
-        # Calcular gastos por categoría
         gastos_por_categoria = (
             gastos.values("categoria__nombre")
             .annotate(total=Sum("cantidad"))
@@ -44,18 +40,16 @@ class HomeView(View):
             "total_gastos": total_gastos,
             "saldo": saldo,
             "gastos_por_categoria": gastos_por_categoria,
-            "today": today,  # Añadimos la fecha actual al contexto
+            "today": today,
         }
         return render(request, "home.html", context)
 
 
 class GastosPorCategoriaView(View):
     def get(self, request):
-        # Obtener el mes y el año de los parámetros de consulta, o usar el mes actual por defecto
         mes = request.GET.get("mes", datetime.date.today().month)
         ano = request.GET.get("ano", datetime.date.today().year)
 
-        # Filtrar gastos por mes y año
         gastos = (
             Gasto.objects.filter(fecha__month=mes, fecha__year=ano)
             .values("categoria__nombre")
@@ -63,7 +57,6 @@ class GastosPorCategoriaView(View):
             .order_by("-total")
         )
 
-        # Preparar los datos para el gráfico
         labels = [gasto["categoria__nombre"] for gasto in gastos]
         data = [gasto["total"] for gasto in gastos]
 
@@ -118,7 +111,6 @@ class ResumenAnualView(View):
         return JsonResponse(data)
 
 
-# Vistas para Categoria
 class CategoriaListView(View):
     def get(self, request):
         categorias = Categoria.objects.all()
@@ -185,7 +177,6 @@ class CategoriaDeleteView(View):
         return redirect("categoria_list")
 
 
-# Vistas para Subcategoria
 class SubcategoriaListView(View):
     def get(self, request):
         subcategorias = Subcategoria.objects.all()
