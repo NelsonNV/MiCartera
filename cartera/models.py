@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class Categoria(models.Model):
@@ -38,6 +39,14 @@ class Ingreso(models.Model):
 
     objects = models.Manager()
 
+    def clean(self):
+        if self.cantidad < 0:
+            raise ValidationError("La cantidad no puede ser negativa.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.categoria}: {self.cantidad}"
 
@@ -53,6 +62,14 @@ class Gasto(models.Model):
     descripcion = models.TextField(blank=True, null=True)
 
     objects = models.Manager()
+
+    def clean(self):
+        if self.cantidad < 0:
+            raise ValidationError("La cantidad no puede ser negativa.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.categoria}: {self.cantidad}"
