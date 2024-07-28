@@ -12,7 +12,7 @@ class Categoria(models.Model):
 
 
 class Subcategoria(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(unique=True, max_length=50)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
 
     objects = models.Manager()
@@ -22,7 +22,7 @@ class Subcategoria(models.Model):
 
 
 class Fuente(models.Model):
-    nombre = models.CharField(max_length=100)
+    nombre = models.CharField(unique=True, max_length=100)
 
     objects = models.Manager()
 
