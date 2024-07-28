@@ -40,7 +40,7 @@ class Ingreso(models.Model):
     objects = models.Manager()
 
     def clean(self):
-        if self.cantidad < 0:
+        if self.cantidad is not None and self.cantidad < 0:
             raise ValidationError("La cantidad no puede ser negativa.")
 
     def save(self, *args, **kwargs):
@@ -64,7 +64,7 @@ class Gasto(models.Model):
     objects = models.Manager()
 
     def clean(self):
-        if self.cantidad < 0:
+        if self.cantidad is not None and self.cantidad < 0:
             raise ValidationError("La cantidad no puede ser negativa.")
 
     def save(self, *args, **kwargs):
