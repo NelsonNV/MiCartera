@@ -54,9 +54,7 @@ class Ingreso(models.Model):
 class Gasto(models.Model):
     fecha = models.DateField()
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    subcategoria = models.ForeignKey(
-        Subcategoria, on_delete=models.SET_NULL, blank=True, null=True
-    )
+    subcategoria = models.ForeignKey(Subcategoria, on_delete=models.CASCADE)
     cantidad = models.DecimalField(max_digits=10, decimal_places=2)
     metodo_pago = models.CharField(max_length=50)
     descripcion = models.TextField(blank=True, null=True)
