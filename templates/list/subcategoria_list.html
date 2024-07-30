@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <h1 class="title">{{ title }}</h1>
+  <div class="buttons">
+    <a href="{% url create_url %}" class="button is-primary">Agregar {{ title_singular }}</a>
+  </div>
+  <table class="table is-fullwidth is-hoverable">
+    <thead>
+      <tr>
+        {% for header in headers %}
+        <th>{{ header }}</th>
+        {% endfor %}
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.nombre }}</td> <!-- Asumiendo que 'nombre' es un campo en Subcategoria -->
+        <td>{{ item.categoria }}</td> <!-- Asumiendo que 'categoria' es un campo en Subcategoria -->
+        <td>
+          <div class="buttons are-small">
+            <a href="{% url update_url item.id %}" class="button is-info">Editar</a>
+            <a href="{% url delete_url item.id %}" class="button is-danger">Eliminar</a>
+          </div>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="{{ headers|length }}">No hay datos disponibles.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
