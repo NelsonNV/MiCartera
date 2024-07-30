@@ -17,9 +17,9 @@
     <div class="columns">
       <div class="column is-half">
         <div class="notification is-primary">
-          <h2 class="subtitle">Saldo Actual: {{ saldo|floatformat:2|intcomma }} $</h2>
-          <h2 class="subtitle">Total Ingresos del Mes: {{ total_ingresos|floatformat:2|intcomma }} $</h2>
-          <h2 class="subtitle">Total Gastos del Mes: {{ total_gastos|floatformat:2|intcomma }} $</h2>
+          <h2 class="subtitle">Saldo Actual: {{ saldo|floatformat:0|intcomma }} $</h2>
+          <h2 class="subtitle">Total Ingresos del Mes: {{ total_ingresos|floatformat:0|intcomma }} $</h2>
+          <h2 class="subtitle">Total Gastos del Mes: {{ total_gastos|floatformat:0|intcomma }} $</h2>
           <h2 class="subtitle">Fecha: {{ today }}</h2>
         </div>
       </div>
@@ -43,7 +43,7 @@
                 <td>{{ ingreso.fecha }}</td>
                 <td class="has-text-success">Ingreso</td>
                 <td>{{ ingreso.categoria }}</td>
-                <td class="has-text-success">{{ ingreso.cantidad|floatformat:2|intcomma }} $</td>
+                <td class="has-text-success">{{ ingreso.cantidad|floatformat:0|intcomma }} $</td>
                 <td>{{ ingreso.descripcion }}</td>
               </tr>
               {% endfor %}
@@ -52,7 +52,7 @@
                 <td>{{ gasto.fecha }}</td>
                 <td class="has-text-danger">Gasto</td>
                 <td>{{ gasto.categoria }}</td>
-                <td class="has-text-danger">{{ gasto.cantidad|floatformat:2|intcomma }} $</td>
+                <td class="has-text-danger">{{ gasto.cantidad|floatformat:0|intcomma }} $</td>
                 <td>{{ gasto.descripcion }}</td>
               </tr>
               {% endfor %}
