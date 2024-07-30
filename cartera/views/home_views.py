@@ -107,3 +107,66 @@ class ResumenAnualView(View):
         }
 
         return JsonResponse(data)
+
+
+class ResumenMensualView(View):
+    def get(self, request):
+        hoy = datetime.date.today()
+        ano = hoy.year
+        mes = hoy.month
+
+        # Obtener el primer y último día del mes
+        primer_dia_mes = hoy.replace(day=1)
+        ultimo_dia_mes = (primer_dia_mes + datetime.timedelta(days=31)).replace(
+            day=1
+        ) - datetime.timedelta(days=1)
+
+        # Obtener ingresos y gastos por día
+        ingresos_diarios = (
+            Ingreso.objects.filter(fecha__year=ano, fecha__month=mes)
+            .values("fecha")
+            .annotate(total=Sum("cantidad"))
+            .order_by("fecha")
+        )
+        gastos_diarios = (
+            Gasto.objects.filter(fecha__year=ano, fecha__month=mes)
+            .values("fecha")
+            .annotate(total=Sum("cantidad"))
+            .order_by("fecha")
+        )
+
+        # Convertir los datos a formato adecuado para la gráfica
+        fechas = []
+        ingresos = []
+        gastos = []
+
+        current_date = primer_dia_mes
+        while current_date <= ultimo_dia_mes:
+            fechas.append(current_date.strftime("%d-%m"))  # Formato día-mes
+            ingreso_total = next(
+                (
+                    item["total"]
+                    for item in ingresos_diarios
+                    if item["fecha"] == current_date
+                ),
+                0,
+            )
+            gasto_total = next(
+                (
+                    item["total"]
+                    for item in gastos_diarios
+                    if item["fecha"] == current_date
+                ),
+                0,
+            )
+            ingresos.append(ingreso_total)
+            gastos.append(gasto_total)
+            current_date += datetime.timedelta(days=1)
+
+        data = {
+            "labels": fechas,
+            "ingresos": ingresos,
+            "gastos": gastos,
+        }
+
+        return JsonResponse(data)
