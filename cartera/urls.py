@@ -10,6 +10,7 @@ urlpatterns = [
     path("", home_views.HomeView.as_view(), name="home"),
     # api
     path("api/resumen_anual/", home_views.ResumenAnualView.as_view(), name="resumen_anual"),
+    path("api/resumen_mensual/", home_views.ResumenMensualView.as_view(), name="resumen_mensual"),
     path("api/gastos-por-categoria/", home_views.GastosPorCategoriaView.as_view(), name="gastos_por_categoria"),
     # Categorias
     path("categorias/", CategoriaView.as_view(), name="categoria_list"),
