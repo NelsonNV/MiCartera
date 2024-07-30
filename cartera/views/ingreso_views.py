@@ -18,7 +18,7 @@ class IngresoView(View):
             "fields": ["fecha", "fuente", "categoria", "cantidad", "descripcion"],
             "items": ingresos,
         }
-        return render(request, "formulario/base_list.html", context)
+        return render(request, "list/ingreso_list.html", context)
 
     def get_create(self, request):
         form = IngresoForm()

@@ -18,7 +18,7 @@ class CategoriaView(View):
             "fields": ["nombre"],
             "items": categorias,
         }
-        return render(request, "formulario/base_list.html", context)
+        return render(request, "list/categoria_list.html", context)
 
     def get_create(self, request):
         form = CategoriaForm()

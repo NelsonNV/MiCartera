@@ -18,7 +18,7 @@ class FuenteView(View):
             "fields": ["nombre"],
             "items": fuentes,
         }
-        return render(request, "formulario/base_list.html", context)
+        return render(request, "list/fuente_list.html", context)
 
     def get_create(self, request):
         form = FuenteForm()
