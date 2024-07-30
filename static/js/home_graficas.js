@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const ctxGastos = document.getElementById('gastosChart').getContext('2d');
   const ctxResumenMensual = document.getElementById('resumenMensualChart').getContext('2d');
+  const ctxGastosMes = document.getElementById('gastosMesChart').getContext('2d');
 
   // Función para cargar datos del gráfico desde la API
   const fetchChartData = async (url) => {
@@ -62,6 +63,54 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             {
               label: 'Gastos',
+              data: chartData.gastos,
+              borderColor: '#ff6384',
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              fill: true,
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            tooltip: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  return tooltipItem.dataset.label + ': ' + tooltipItem.raw.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' $';
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+  });
+
+  // Cargar y mostrar el gráfico de ingresos y gastos del mes
+  fetchChartData(urlResumenMensual).then(chartData => {
+    if (chartData) {
+      new Chart(ctxGastosMes, {
+        type: 'line',
+        data: {
+          labels: chartData.labels,
+          datasets: [
+            {
+              label: 'Ingresos del Mes',
+              data: chartData.ingresos,
+              borderColor: '#36a2eb',
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              fill: true,
+            },
+            {
+              label: 'Gastos del Mes',
               data: chartData.gastos,
               borderColor: '#ff6384',
               backgroundColor: 'rgba(255, 99, 132, 0.2)',
