@@ -5,6 +5,7 @@ from cartera.views.fuente_views import FuenteView
 from cartera.views.subcategoria_views import SubcategoriaView
 from cartera.views.gasto_views import GastoView
 from cartera.views.ingreso_views import IngresoView
+from cartera.views.metodopago_views import MetodoPagoView 
 
 urlpatterns = [
     path("", home_views.HomeView.as_view(), name="home"),
@@ -37,4 +38,9 @@ urlpatterns = [
     path("gastos/crear/", GastoView.as_view(), {'action': 'create'}, name="gasto_create"),
     path("gastos/editar/<int:pk>/", GastoView.as_view(), {'action': 'update'}, name="gasto_update"),
     path("gastos/eliminar/<int:pk>/", GastoView.as_view(), {'action': 'delete'}, name="gasto_delete"),
+     # Métodos de Pago
+    path("metodospago/", MetodoPagoView.as_view(), name="metodopago_list"),
+    path("metodospago/crear/", MetodoPagoView.as_view(), {'action': 'create'}, name="metodopago_create"),
+    path("metodospago/editar/<int:pk>/", MetodoPagoView.as_view(), {'action': 'update'}, name="metodopago_update"),
+    path("metodospago/eliminar/<int:pk>/", MetodoPagoView.as_view(), {'action': 'delete'}, name="metodopago_delete"),
 ]

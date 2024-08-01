@@ -51,12 +51,20 @@ class Ingreso(models.Model):
         return f"{self.categoria}: {self.cantidad}"
 
 
+class MetodoPago(models.Model):
+    metodo = models.CharField(unique=True, max_length=100)
+    objects = models.Manager()
+
+    def __str__(self):
+        return f"{self.metodo}"
+
+
 class Gasto(models.Model):
     fecha = models.DateField()
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     subcategoria = models.ForeignKey(Subcategoria, on_delete=models.CASCADE)
     cantidad = models.DecimalField(max_digits=10, decimal_places=2)
-    metodo_pago = models.CharField(max_length=50)
+    metodo_pago = models.ForeignKey(MetodoPago, on_delete=models.CASCADE)
     descripcion = models.TextField(blank=True, null=True)
 
     objects = models.Manager()
