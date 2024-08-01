@@ -1,5 +1,5 @@
 from django import forms
-from .models import Categoria, Subcategoria, Fuente, Ingreso, Gasto
+from .models import Categoria, Subcategoria, Fuente, Ingreso, Gasto, MetodoPago
 
 
 class CategoriaForm(forms.ModelForm):
@@ -11,6 +11,13 @@ class CategoriaForm(forms.ModelForm):
                 attrs={"class": "input", "placeholder": "Nombre de la categoría"}
             ),
         }
+
+
+class MetodoPagoForm(forms.ModelForm):
+    class Meta:
+        model = MetodoPago
+        fields = ["metodo"]
+        widgets = {"metodo": forms.TextInput(attrs={"class": "input"})}
 
 
 class SubcategoriaForm(forms.ModelForm):
@@ -71,9 +78,7 @@ class GastoForm(forms.ModelForm):
             "cantidad": forms.NumberInput(
                 attrs={"class": "input", "placeholder": "Cantidad", "step": "0.01"}
             ),
-            "metodo_pago": forms.TextInput(
-                attrs={"class": "input", "placeholder": "Método de pago"}
-            ),
+            "metodo_pago": forms.Select(attrs={"class": "select"}),
             "descripcion": forms.Textarea(
                 attrs={"class": "textarea", "placeholder": "Descripción", "rows": 3}
             ),
