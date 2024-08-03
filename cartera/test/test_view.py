@@ -52,7 +52,7 @@ class ViewTests(TestCase):
     def test_categoria_list_view(self):
         response = self.client.get(reverse("categoria_list"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "formulario/base_list.html")
+        self.assertTemplateUsed(response, "list/categoria_list.html")
 
     def test_categoria_create_view_get(self):
         response = self.client.get(reverse("categoria_create"))
@@ -111,22 +111,22 @@ class ViewTests(TestCase):
     def test_subcategoria_list_view(self):
         response = self.client.get(reverse("subcategoria_list"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "formulario/base_list.html")
+        self.assertTemplateUsed(response, "list/subcategoria_list.html")
 
     def test_fuente_list_view(self):
         response = self.client.get(reverse("fuente_list"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "formulario/base_list.html")
+        self.assertTemplateUsed(response, "list/fuente_list.html")
 
     def test_ingreso_list_view(self):
         response = self.client.get(reverse("ingreso_list"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "formulario/base_list.html")
+        self.assertTemplateUsed(response, "list/ingreso_list.html")
 
     def test_gasto_list_view(self):
         response = self.client.get(reverse("gasto_list"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "formulario/base_list.html")
+        self.assertTemplateUsed(response, "list/gasto_list.html")
 
     def test_subcategoria_create_view_post(self):
         response = self.client.post(
