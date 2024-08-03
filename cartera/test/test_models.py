@@ -1,5 +1,5 @@
 from django.test import TestCase
-from cartera.models import Categoria, Subcategoria, Fuente, Ingreso, Gasto
+from cartera.models import Categoria, Subcategoria, Fuente, Ingreso, Gasto, MetodoPago
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 
@@ -41,6 +41,7 @@ class ModeloTests(TestCase):
 
     def test_creacion_gasto(self):
         categoria = Categoria.objects.create(nombre="Transporte")
+        metodopago = MetodoPago.objects.create(metodo="Efectivo")
         subcategoria = Subcategoria.objects.create(
             nombre="Gasolina", categoria=categoria
         )
@@ -49,7 +50,7 @@ class ModeloTests(TestCase):
             categoria=categoria,
             subcategoria=subcategoria,
             cantidad=50.00,
-            metodo_pago="Efectivo",
+            metodo_pago=metodopago,
         )
         self.assertTrue(
             Gasto.objects.filter(
@@ -57,7 +58,7 @@ class ModeloTests(TestCase):
                 categoria=categoria,
                 subcategoria=subcategoria,
                 cantidad=50.00,
-                metodo_pago="Efectivo",
+                metodo_pago=metodopago,
             ).exists(),
             "El gasto no fue creado correctamente",
         )
@@ -129,6 +130,7 @@ class ModeloTests(TestCase):
 
     def test_creacion_gasto_cantidad_negativa(self):
         categoria = Categoria.objects.create(nombre="Transporte")
+        metodopago = MetodoPago.objects.create(metodo="Efectivo")
         subcategoria = Subcategoria.objects.create(
             nombre="Gasolina", categoria=categoria
         )
@@ -138,7 +140,7 @@ class ModeloTests(TestCase):
                 categoria=categoria,
                 subcategoria=subcategoria,
                 cantidad=-50.00,
-                metodo_pago="Efectivo",
+                metodo_pago=metodopago,
             )
             gasto.full_clean()
 
