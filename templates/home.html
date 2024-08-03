@@ -17,9 +17,9 @@
     <div class="columns">
       <div class="column is-half">
         <div class="notification is-primary">
-          <h2 class="subtitle">Saldo Actual: {{ saldo|floatformat:0|intcomma }} $</h2>
-          <h2 class="subtitle">Total Ingresos: {{ total_ingresos|floatformat:0|intcomma }} $</h2>
-          <h2 class="subtitle">Total Gastos: {{ total_gastos|floatformat:0|intcomma }} $</h2>
+          <h2 class="subtitle">capital: ${{ saldo|floatformat:0|intcomma }} </h2>
+          <h2 class="subtitle">Total Ingresos: ${{ total_ingresos|floatformat:0|intcomma }} </h2>
+          <h2 class="subtitle">Total Gastos: ${{ total_gastos|floatformat:0|intcomma }} </h2>
           <h2 class="subtitle">Fecha actual: {{ today }}</h2>
         </div>
       </div>
