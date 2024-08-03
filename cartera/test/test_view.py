@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from cartera.models import Categoria, Subcategoria, Fuente, Ingreso, Gasto
+from cartera.models import Categoria, Subcategoria, Fuente, Ingreso, Gasto, MetodoPago
 from django.contrib.auth.models import User
 from django.http import Http404
 
@@ -17,6 +17,8 @@ class ViewTests(TestCase):
             nombre="Subcategoría Test", categoria=self.categoria
         )
         self.fuente = Fuente.objects.create(nombre="Fuente Test")
+        self.metodo_pago = MetodoPago.objects.create(metodo="Efectivo")
+
         self.ingreso = Ingreso.objects.create(
             fecha="2024-07-27",
             fuente=self.fuente,
@@ -29,7 +31,7 @@ class ViewTests(TestCase):
             categoria=self.categoria,
             subcategoria=self.subcategoria,
             cantidad=50.00,
-            metodo_pago="Efectivo",
+            metodo_pago=self.metodo_pago,
             descripcion="Gasto Test",
         )
 
@@ -240,7 +242,7 @@ class ViewTests(TestCase):
                 "categoria": self.categoria.id,
                 "subcategoria": self.subcategoria.id,
                 "cantidad": 100.00,
-                "metodo_pago": "Efectivo",
+                "metodo_pago": self.metodo_pago.id,
                 "descripcion": "Nuevo Gasto",
             },
         )
@@ -255,7 +257,7 @@ class ViewTests(TestCase):
                 "categoria": self.categoria.id,
                 "subcategoria": self.subcategoria.id,
                 "cantidad": 150.00,
-                "metodo_pago": "Efectivo",
+                "metodo_pago": self.metodo_pago.id,
                 "descripcion": "Gasto Actualizado",
             },
         )
