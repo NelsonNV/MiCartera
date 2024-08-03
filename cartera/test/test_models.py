@@ -28,14 +28,13 @@ class ModeloTests(TestCase):
         )
 
     def test_creacion_ingreso(self):
-        categoria = Categoria.objects.create(nombre="Salario")
         fuente = Fuente.objects.create(nombre="Empresa XYZ")
         ingreso = Ingreso.objects.create(
-            fecha="2023-01-01", fuente=fuente, categoria=categoria, cantidad=1000.00
+            fecha="2023-01-01", fuente=fuente, cantidad=1000.00
         )
         self.assertTrue(
             Ingreso.objects.filter(
-                fecha="2023-01-01", fuente=fuente, categoria=categoria, cantidad=1000.00
+                fecha="2023-01-01", fuente=fuente, cantidad=1000.00
             ).exists(),
             "El ingreso no fue creado correctamente",
         )
@@ -144,10 +143,9 @@ class ModeloTests(TestCase):
             gasto.full_clean()
 
     def test_actualizacion_ingreso(self):
-        categoria = Categoria.objects.create(nombre="Salario")
         fuente = Fuente.objects.create(nombre="Empresa XYZ")
         ingreso = Ingreso.objects.create(
-            fecha="2023-01-01", fuente=fuente, categoria=categoria, cantidad=1000.00
+            fecha="2023-01-01", fuente=fuente, cantidad=1000.00
         )
         ingreso.cantidad = 1200.00
         ingreso.save()
@@ -159,15 +157,14 @@ class ModeloTests(TestCase):
         )
 
     def test_eliminacion_ingreso(self):
-        categoria = Categoria.objects.create(nombre="Salario")
         fuente = Fuente.objects.create(nombre="Empresa XYZ")
         ingreso = Ingreso.objects.create(
-            fecha="2023-01-01", fuente=fuente, categoria=categoria, cantidad=1000.00
+            fecha="2023-01-01", fuente=fuente, cantidad=1000.00
         )
         ingreso.delete()
         self.assertFalse(
             Ingreso.objects.filter(
-                fecha="2023-01-01", fuente=fuente, categoria=categoria, cantidad=1000.00
+                fecha="2023-01-01", fuente=fuente, cantidad=1000.00
             ).exists(),
             "El ingreso no fue eliminado correctamente",
         )

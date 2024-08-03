@@ -46,11 +46,10 @@ class FuenteForm(forms.ModelForm):
 class IngresoForm(forms.ModelForm):
     class Meta:
         model = Ingreso
-        fields = ["fecha", "fuente", "categoria", "cantidad", "descripcion"]
+        fields = ["fecha", "fuente", "cantidad", "descripcion"]
         widgets = {
             "fecha": forms.DateInput(attrs={"class": "input", "type": "date"}),
             "fuente": forms.Select(attrs={"class": "select2 input"}),
-            "categoria": forms.Select(attrs={"class": "select2 input"}),
             "cantidad": forms.NumberInput(
                 attrs={"class": "input", "placeholder": "Cantidad", "step": "0.01"}
             ),

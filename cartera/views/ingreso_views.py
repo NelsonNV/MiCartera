@@ -14,8 +14,8 @@ class IngresoView(View):
             "create_url": "ingreso_create",
             "update_url": "ingreso_update",
             "delete_url": "ingreso_delete",
-            "headers": ["Fecha", "Fuente", "Categoría", "Cantidad", "Descripción"],
-            "fields": ["fecha", "fuente", "categoria", "cantidad", "descripcion"],
+            "headers": ["Fecha", "Fuente", "Cantidad", "Descripción"],
+            "fields": ["fecha", "fuente", "cantidad", "descripcion"],
             "items": ingresos,
         }
         return render(request, "list/ingreso_list.html", context)

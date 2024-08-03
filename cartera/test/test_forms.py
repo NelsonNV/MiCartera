@@ -64,7 +64,6 @@ class FuenteFormTest(TestCase):
 
 class IngresoFormTest(TestCase):
     def setUp(self):
-        self.categoria = models.Categoria.objects.create(nombre="Alimentos")
         self.fuente = models.Fuente.objects.create(nombre="Trabajo")
 
     def test_ingreso_form_valid(self):
@@ -72,7 +71,6 @@ class IngresoFormTest(TestCase):
             data={
                 "fecha": "2024-07-27",
                 "fuente": self.fuente.id,
-                "categoria": self.categoria.id,
                 "cantidad": 1500.00,  # Ingresar como número
                 "descripcion": "Salario mensual",
             }
@@ -84,7 +82,6 @@ class IngresoFormTest(TestCase):
             data={
                 "fecha": "",
                 "fuente": "",
-                "categoria": "",
                 "cantidad": "",
                 "descripcion": "",
             }
@@ -96,7 +93,6 @@ class IngresoFormTest(TestCase):
             data={
                 "fecha": "",
                 "fuente": self.fuente.id,
-                "categoria": self.categoria.id,
                 "cantidad": 1500.00,
                 "descripcion": "Salario mensual",
             }
@@ -108,19 +104,6 @@ class IngresoFormTest(TestCase):
             data={
                 "fecha": "2024-07-27",
                 "fuente": "",
-                "categoria": self.categoria.id,
-                "cantidad": 1500.00,
-                "descripcion": "Salario mensual",
-            }
-        )
-        self.assertFalse(form.is_valid())
-
-    def test_ingreso_form_invalid_no_categoria(self):
-        form = forms.IngresoForm(
-            data={
-                "fecha": "2024-07-27",
-                "fuente": self.fuente.id,
-                "categoria": "",
                 "cantidad": 1500.00,
                 "descripcion": "Salario mensual",
             }
@@ -132,7 +115,6 @@ class IngresoFormTest(TestCase):
             data={
                 "fecha": "2024-07-27",
                 "fuente": self.fuente.id,
-                "categoria": self.categoria.id,
                 "cantidad": "",
                 "descripcion": "Salario mensual",
             }
@@ -144,7 +126,6 @@ class IngresoFormTest(TestCase):
             data={
                 "fecha": "2024-07-27",
                 "fuente": self.fuente.id,
-                "categoria": self.categoria.id,
                 "cantidad": 1500.00,
                 "descripcion": "",
             }
@@ -156,7 +137,6 @@ class IngresoFormTest(TestCase):
             data={
                 "fecha": "2024-07-27",
                 "fuente": self.fuente.id,
-                "categoria": self.categoria.id,
                 "cantidad": -1500.00,
                 "descripcion": "Salario mensual",
             }
@@ -168,7 +148,6 @@ class IngresoFormTest(TestCase):
             data={
                 "fecha": "2024-07-27",
                 "fuente": self.fuente.id,
-                "categoria": self.categoria.id,
                 "cantidad": "mil quinientos",
                 "descripcion": "Salario mensual",
             }
