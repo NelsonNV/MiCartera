@@ -1,9 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Mi Cartera{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'img/wallet.svg' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     {% block extra_css %}
@@ -14,6 +16,7 @@
     <nav class="navbar is-primary">
         <div class="navbar-brand">
             <a class="navbar-item" href="{% url 'home' %}">
+            <img src="{% static '/img/wallet.svg' %}" alt="wallet">
                 Mi Cartera
             </a>
             <div class="navbar-burger burger" data-target="navbarMenu">
