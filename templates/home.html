@@ -26,34 +26,32 @@
 
       <div class="column is-half">
         <div class="box">
-          <h2 class="subtitle">Ingresos y Gastos {{today|date:"F Y"}}</h2>
+          <h2 class="subtitle">Historial de {{ today|date:"F Y" }}</h2>
           <table class="table is-striped">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Tipo</th>
-                <th>Categoría</th>
-                <th>Cantidad</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for ingreso in ingresos %}
-              <tr>
-                <td>{{ ingreso.fecha }}</td>
-                <td class="has-text-success">Ingreso</td>
-                <td>{{ ingreso.categoria }}</td>
-                <td class="has-text-success">{{ ingreso.cantidad|floatformat:0|intcomma }} $</td>
-              </tr>
-              {% endfor %}
-              {% for gasto in gastos %}
-              <tr>
-                <td>{{ gasto.fecha }}</td>
-                <td class="has-text-danger">Gasto</td>
-                <td>{{ gasto.categoria }}</td>
-                <td class="has-text-danger">{{ gasto.cantidad|floatformat:0|intcomma }} $</td>
-              </tr>
-              {% endfor %}
-            </tbody>
+              <thead>
+                  <tr>
+                      <th>Fecha</th>
+                      <th>Tipo</th>
+                      <th>Categoría</th>
+                      <th>Cantidad</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for item in historial %}
+                  <tr>
+                      <td>{{ item.fecha }}</td>
+                      {% if item.tipo == "Ingreso" %}
+                      <td class="has-text-success">Ingreso</td>
+                      <td>{{ item.categoria }}</td>
+                      <td class="has-text-success">${{ item.cantidad|floatformat:0|intcomma }}</td>
+                      {% else %}
+                      <td class="has-text-danger">Gasto</td>
+                      <td>{{ item.categoria }}</td>
+                      <td class="has-text-danger">${{ item.cantidad|floatformat:0|intcomma }}</td>
+                      {% endif %}
+                  </tr>
+                  {% endfor %}
+              </tbody>
           </table>
         </div>
       </div>

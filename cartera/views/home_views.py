@@ -31,9 +31,30 @@ class HomeView(View):
             .order_by("-total")
         )
 
+        historial = []
+        for ingreso in ingresos:
+            historial.append(
+                {
+                    "fecha": ingreso.fecha,
+                    "tipo": "Ingreso",
+                    "categoria": ingreso.fuente,
+                    "cantidad": ingreso.cantidad,
+                }
+            )
+        for gasto in gastos:
+            historial.append(
+                {
+                    "fecha": gasto.fecha,
+                    "tipo": "Gasto",
+                    "categoria": gasto.categoria.nombre,
+                    "cantidad": gasto.cantidad,
+                }
+            )
+
+        historial = sorted(historial, key=lambda x: x["fecha"])
+
         context = {
-            "ingresos": ingresos,
-            "gastos": gastos,
+            "historial": historial,
             "total_ingresos": total_ingresos,
             "total_gastos": total_gastos,
             "saldo": saldo,
