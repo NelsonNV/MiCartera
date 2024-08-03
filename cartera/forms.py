@@ -72,8 +72,10 @@ class GastoForm(forms.ModelForm):
         ]
         widgets = {
             "fecha": forms.DateInput(attrs={"class": "input", "type": "date"}),
-            "categoria": forms.Select(attrs={"class": "select"}),
-            "subcategoria": forms.Select(attrs={"class": "select"}),
+            "categoria": forms.Select(attrs={"class": "select", "id": "id_categoria"}),
+            "subcategoria": forms.Select(
+                attrs={"class": "select", "id": "id_subcategoria"}
+            ),
             "cantidad": forms.NumberInput(
                 attrs={"class": "input", "placeholder": "Cantidad", "step": "0.01"}
             ),
