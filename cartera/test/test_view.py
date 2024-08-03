@@ -22,7 +22,6 @@ class ViewTests(TestCase):
         self.ingreso = Ingreso.objects.create(
             fecha="2024-07-27",
             fuente=self.fuente,
-            categoria=self.categoria,
             cantidad=100.00,
             descripcion="Ingreso Test",
         )
@@ -198,7 +197,6 @@ class ViewTests(TestCase):
             {
                 "fecha": "2024-07-27",
                 "fuente": self.fuente.id,
-                "categoria": self.categoria.id,
                 "cantidad": 200.00,
                 "descripcion": "Nuevo Ingreso",
             },
@@ -212,7 +210,6 @@ class ViewTests(TestCase):
             {
                 "fecha": "2024-07-27",
                 "fuente": self.fuente.id,
-                "categoria": self.categoria.id,
                 "cantidad": 300.00,
                 "descripcion": "Ingreso Actualizado",
             },
