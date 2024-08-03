@@ -94,9 +94,7 @@ class ModeloTests(TestCase):
     def test_creacion_ingreso_sin_fuente(self):
         categoria = Categoria.objects.create(nombre="Salario")
         with self.assertRaises(IntegrityError):
-            Ingreso.objects.create(
-                fecha="2023-01-01", categoria=categoria, cantidad=1000.00
-            )
+            Ingreso.objects.create(fecha="2023-01-01", cantidad=1000.00)
 
     def test_creacion_gasto_sin_metodo_pago(self):
         categoria = Categoria.objects.create(nombre="Transporte")
@@ -117,13 +115,11 @@ class ModeloTests(TestCase):
             Categoria.objects.create(nombre=None)
 
     def test_creacion_ingreso_cantidad_negativa(self):
-        categoria = Categoria.objects.create(nombre="Salario")
         fuente = Fuente.objects.create(nombre="Empresa XYZ")
         with self.assertRaises(ValidationError):
             ingreso = Ingreso(
                 fecha="2023-01-01",
                 fuente=fuente,
-                categoria=categoria,
                 cantidad=-1000.00,
             )
             ingreso.full_clean()
