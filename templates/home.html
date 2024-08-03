@@ -34,7 +34,6 @@
                 <th>Tipo</th>
                 <th>Categoría</th>
                 <th>Cantidad</th>
-                <th>Descripción</th>
               </tr>
             </thead>
             <tbody>
@@ -44,7 +43,6 @@
                 <td class="has-text-success">Ingreso</td>
                 <td>{{ ingreso.categoria }}</td>
                 <td class="has-text-success">{{ ingreso.cantidad|floatformat:0|intcomma }} $</td>
-                <td>{{ ingreso.descripcion }}</td>
               </tr>
               {% endfor %}
               {% for gasto in gastos %}
@@ -53,7 +51,6 @@
                 <td class="has-text-danger">Gasto</td>
                 <td>{{ gasto.categoria }}</td>
                 <td class="has-text-danger">{{ gasto.cantidad|floatformat:0|intcomma }} $</td>
-                <td>{{ gasto.descripcion }}</td>
               </tr>
               {% endfor %}
             </tbody>
