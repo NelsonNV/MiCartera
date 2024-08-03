@@ -33,7 +33,6 @@ class Fuente(models.Model):
 class Ingreso(models.Model):
     fecha = models.DateField()
     fuente = models.ForeignKey(Fuente, on_delete=models.CASCADE)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     cantidad = models.DecimalField(max_digits=10, decimal_places=2)
     descripcion = models.TextField(blank=True, null=True)
 
@@ -48,7 +47,7 @@ class Ingreso(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.categoria}: {self.cantidad}"
+        return f"{self.fuente}: ${self.cantidad}"
 
 
 class MetodoPago(models.Model):
