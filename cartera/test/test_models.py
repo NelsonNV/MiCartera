@@ -5,6 +5,13 @@ from django.db.utils import IntegrityError
 
 
 class ModeloTests(TestCase):
+    def test_creacion_metodopago(self):
+        MetodoPago.objects.create(metodo="Efectivo")
+        self.assertTrue(
+            MetodoPago.objects.filter(metodo="Efectivo").exists(),
+            "El Metodo depago no fue creada correctamente",
+        )
+
     def test_creacion_categoria(self):
         categoria = Categoria.objects.create(nombre="Alimentos")
         self.assertTrue(
