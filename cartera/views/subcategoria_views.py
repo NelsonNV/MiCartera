@@ -3,6 +3,7 @@ from cartera.models import Subcategoria
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib import messages
+from django.http import JsonResponse
 
 
 class SubcategoriaView(View):
@@ -64,6 +65,11 @@ class SubcategoriaView(View):
         messages.success(request, "Subcategoría eliminada exitosamente.")
         return redirect("subcategoria_list")
 
+    def load_subcategorias(self, request):
+        categoria_id = request.GET.get("categoria_id")
+        subcategorias = Subcategoria.objects.filter(categoria_id=categoria_id).all()
+        return JsonResponse(list(subcategorias.values("id", "nombre")), safe=False)
+
     def dispatch(self, request, *args, **kwargs):
         action = kwargs.pop("action", None)
         pk = kwargs.get("pk", None)
@@ -75,6 +81,8 @@ class SubcategoriaView(View):
                 return self.get_update(request, pk)
             elif action == "delete":
                 return self.get_delete(request, pk)
+            elif action == "load_subcategorias":
+                return self.load_subcategorias(request)
             else:
                 return self.get_list(request)
 

@@ -13,6 +13,7 @@ urlpatterns = [
     path("api/resumen_anual/", home_views.ResumenAnualView.as_view(), name="resumen_anual"),
     path("api/resumen_mensual/", home_views.ResumenMensualView.as_view(), name="resumen_mensual"),
     path("api/gastos-por-categoria/", home_views.GastosPorCategoriaView.as_view(), name="gastos_por_categoria"),
+    path('api/load-subcategorias/', SubcategoriaView.as_view(),{"action":'load_subcategorias'}, name='load_subcategorias'),
     # Categorias
     path("categorias/", CategoriaView.as_view(), name="categoria_list"),
     path("categorias/crear/", CategoriaView.as_view(), {"action": "create"}, name="categoria_create"),
