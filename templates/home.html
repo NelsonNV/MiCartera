@@ -18,9 +18,9 @@
       <div class="column is-half">
         <div class="notification is-primary">
           <h2 class="subtitle">Saldo Actual: {{ saldo|floatformat:0|intcomma }} $</h2>
-          <h2 class="subtitle">Total Ingresos del Mes: {{ total_ingresos|floatformat:0|intcomma }} $</h2>
-          <h2 class="subtitle">Total Gastos del Mes: {{ total_gastos|floatformat:0|intcomma }} $</h2>
-          <h2 class="subtitle">Fecha: {{ today }}</h2>
+          <h2 class="subtitle">Total Ingresos: {{ total_ingresos|floatformat:0|intcomma }} $</h2>
+          <h2 class="subtitle">Total Gastos: {{ total_gastos|floatformat:0|intcomma }} $</h2>
+          <h2 class="subtitle">Fecha actual: {{ today }}</h2>
         </div>
       </div>
 
@@ -69,16 +69,16 @@
 
       <div class="column is-half">
         <div class="box">
-          <h2 class="subtitle">Ingresos y Gastos del año {{today|date:"Y"}}</h2>
-          <canvas id="resumenMensualChart"></canvas>
+          <h2 class="subtitle">Ingresos y Gastos de {{today|date:"F Y"}}</h2>
+          <canvas id="gastosMesChart"></canvas>
         </div>
       </div>
     </div>
 
-      <div class="column is-half">
+      <div class="column is-full">
         <div class="box">
-          <h2 class="subtitle">Ingresos y Gastos de {{today|date:"F Y"}}</h2>
-          <canvas id="gastosMesChart"></canvas>
+          <h2 class="subtitle">Ingresos y Gastos del año {{today|date:"Y"}}</h2>
+          <canvas id="resumenMensualChart"></canvas>
         </div>
       </div>
   </div>
