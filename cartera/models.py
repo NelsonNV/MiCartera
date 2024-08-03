@@ -18,7 +18,7 @@ class Subcategoria(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f"{self.nombre} ({self.categoria})"
+        return f"{self.nombre}"
 
 
 class Fuente(models.Model):
