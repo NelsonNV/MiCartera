@@ -157,6 +157,7 @@ class IngresoFormTest(TestCase):
 
 class GastoFormTest(TestCase):
     def setUp(self):
+        self.metodopago = models.MetodoPago.objects.create(metodo="efectivo")
         self.categoria = models.Categoria.objects.create(nombre="Transporte")
         self.subcategoria = models.Subcategoria.objects.create(
             nombre="Taxi", categoria=self.categoria
@@ -169,7 +170,7 @@ class GastoFormTest(TestCase):
                 "categoria": self.categoria.id,
                 "subcategoria": self.subcategoria.id,
                 "cantidad": 20.00,  # Ingresar como número
-                "metodo_pago": "Efectivo",
+                "metodo_pago": self.metodopago.id,
                 "descripcion": "Viaje en taxi",
             }
         )
@@ -208,7 +209,7 @@ class GastoFormTest(TestCase):
                 "categoria": "",
                 "subcategoria": self.subcategoria.id,
                 "cantidad": 20.00,
-                "metodo_pago": "Efectivo",
+                "metodo_pago": self.metodopago.id,
                 "descripcion": "Viaje en taxi",
             }
         )
@@ -221,7 +222,7 @@ class GastoFormTest(TestCase):
                 "categoria": self.categoria.id,
                 "subcategoria": "",
                 "cantidad": 20.00,
-                "metodo_pago": "Efectivo",
+                "metodo_pago": self.metodopago.id,
                 "descripcion": "Viaje en taxi",
             }
         )
@@ -234,7 +235,7 @@ class GastoFormTest(TestCase):
                 "categoria": self.categoria.id,
                 "subcategoria": self.subcategoria.id,
                 "cantidad": "",
-                "metodo_pago": "Efectivo",
+                "metodo_pago": self.metodopago.id,
                 "descripcion": "Viaje en taxi",
             }
         )
@@ -260,7 +261,7 @@ class GastoFormTest(TestCase):
                 "categoria": self.categoria.id,
                 "subcategoria": self.subcategoria.id,
                 "cantidad": 20.00,
-                "metodo_pago": "Efectivo",
+                "metodo_pago": self.metodopago.id,
                 "descripcion": "",
             }
         )
