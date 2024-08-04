@@ -13,7 +13,7 @@ class ModeloTests(TestCase):
         )
 
     def test_creacion_categoria(self):
-        categoria = Categoria.objects.create(nombre="Alimentos")
+        Categoria.objects.create(nombre="Alimentos")
         self.assertTrue(
             Categoria.objects.filter(nombre="Alimentos").exists(),
             "La categoría no fue creada correctamente",
@@ -21,14 +21,14 @@ class ModeloTests(TestCase):
 
     def test_creacion_subcategoria(self):
         categoria = Categoria.objects.create(nombre="Entretenimiento")
-        subcategoria = Subcategoria.objects.create(nombre="Cine", categoria=categoria)
+        Subcategoria.objects.create(nombre="Cine", categoria=categoria)
         self.assertTrue(
             Subcategoria.objects.filter(nombre="Cine", categoria=categoria).exists(),
             "La subcategoría no fue creada correctamente",
         )
 
     def test_creacion_fuente(self):
-        fuente = Fuente.objects.create(nombre="Trabajo")
+        Fuente.objects.create(nombre="Trabajo")
         self.assertTrue(
             Fuente.objects.filter(nombre="Trabajo").exists(),
             "La fuente no fue creada correctamente",
@@ -36,9 +36,7 @@ class ModeloTests(TestCase):
 
     def test_creacion_ingreso(self):
         fuente = Fuente.objects.create(nombre="Empresa XYZ")
-        ingreso = Ingreso.objects.create(
-            fecha="2023-01-01", fuente=fuente, cantidad=1000.00
-        )
+        Ingreso.objects.create(fecha="2023-01-01", fuente=fuente, cantidad=1000.00)
         self.assertTrue(
             Ingreso.objects.filter(
                 fecha="2023-01-01", fuente=fuente, cantidad=1000.00
@@ -52,7 +50,7 @@ class ModeloTests(TestCase):
         subcategoria = Subcategoria.objects.create(
             nombre="Gasolina", categoria=categoria
         )
-        gasto = Gasto.objects.create(
+        Gasto.objects.create(
             fecha="2023-01-02",
             categoria=categoria,
             subcategoria=subcategoria,
@@ -99,7 +97,7 @@ class ModeloTests(TestCase):
             Subcategoria.objects.create(nombre="Sin Categoría")
 
     def test_creacion_ingreso_sin_fuente(self):
-        categoria = Categoria.objects.create(nombre="Salario")
+        Categoria.objects.create(nombre="Salario")
         with self.assertRaises(IntegrityError):
             Ingreso.objects.create(fecha="2023-01-01", cantidad=1000.00)
 
