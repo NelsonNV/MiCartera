@@ -52,7 +52,7 @@
         </nav>
     </header>
 
-    <div class="container">
+    <main class="container">
         {% if messages %}
             <div class="notification is-success" role="alert">
                 {% for message in messages %}
@@ -64,7 +64,7 @@
         
         {% block content %}
         {% endblock %}
-    </div>
+    </main>
 
     <footer class="footer">
       <div class="content has-text-centered">
