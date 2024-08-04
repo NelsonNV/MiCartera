@@ -13,42 +13,44 @@
     {% endblock %}
 </head>
 <body>
-    <nav class="navbar is-primary">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="{% url 'home' %}">
-            <img src="{% static '/img/wallet.svg' %}" alt="wallet">
-                Mi Cartera
-            </a>
-            <div class="navbar-burger burger" data-target="navbarMenu">
-                <span></span>
-                <span></span>
-                <span></span>
+    <header>
+        <nav class="navbar is-primary">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="{% url 'home' %}">
+                    <img src="{% static 'img/wallet.svg' %}" alt="wallet">
+                    Mi Cartera
+                </a>
+                <div class="navbar-burger burger" data-target="navbarMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
-        </div>
 
-        <div id="navbarMenu" class="navbar-menu">
-            <div class="navbar-end">
-                <a class="navbar-item" href="{% url 'metodopago_list' %}">
-                   Metodo de Pago 
-                </a>
-                <a class="navbar-item" href="{% url 'categoria_list' %}">
-                    Categorías
-                </a>
-                <a class="navbar-item" href="{% url 'subcategoria_list' %}">
-                    Subcategorías
-                </a>
-                <a class="navbar-item" href="{% url 'fuente_list' %}">
-                    Fuentes
-                </a>
-                <a class="navbar-item" href="{% url 'ingreso_list' %}">
-                    Ingresos
-                </a>
-                <a class="navbar-item" href="{% url 'gasto_list' %}">
-                    Gastos
-                </a>
+            <div id="navbarMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item" href="{% url 'metodopago_list' %}">
+                        Método de Pago
+                    </a>
+                    <a class="navbar-item" href="{% url 'categoria_list' %}">
+                        Categorías
+                    </a>
+                    <a class="navbar-item" href="{% url 'subcategoria_list' %}">
+                        Subcategorías
+                    </a>
+                    <a class="navbar-item" href="{% url 'fuente_list' %}">
+                        Fuentes
+                    </a>
+                    <a class="navbar-item" href="{% url 'ingreso_list' %}">
+                        Ingresos
+                    </a>
+                    <a class="navbar-item" href="{% url 'gasto_list' %}">
+                        Gastos
+                    </a>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <div class="container">
         {% if messages %}
