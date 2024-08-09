@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block content %}
 <div class="container">
@@ -25,7 +26,7 @@
         <td>{{ item.fecha }}</td>
         <td>{{ item.categoria }}</td>
         <td>{{ item.subcategoria.nombre }}</td>
-        <td>{{ item.cantidad }}</td>
+        <td>{{ item.cantidad|floatformat:0|intcomma }}</td>
         <td>{{ item.metodo_pago }}</td>
         <td>{{ item.descripcion }}</td>
         <td>

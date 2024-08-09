@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block content %}
 <div class="container">
@@ -21,7 +22,7 @@
       <tr>
         <td>{{ item.fecha }}</td> <!-- Muestra el campo 'fecha' -->
         <td>{{ item.fuente }}</td> <!-- Muestra el campo 'fuente' -->
-        <td>{{ item.cantidad }}</td> <!-- Muestra el campo 'cantidad' -->
+        <td>{{ item.cantidad|floatformat:0|intcomma}}</td> <!-- Muestra el campo 'cantidad' -->
         <td>{{ item.descripcion }}</td> <!-- Muestra el campo 'descripcion' -->
         <td>
           <div class="buttons are-small">
