@@ -21,8 +21,12 @@ class HomeView(View):
             fecha__range=[first_day_of_month, last_day_of_month]
         )
 
-        total_ingresos = ingresos.aggregate(total=Sum("cantidad"))["total"] or 0
-        total_gastos = gastos.aggregate(total=Sum("cantidad"))["total"] or 0
+        total_ingresos_mes = ingresos.aggregate(total=Sum("cantidad"))["total"] or 0
+        total_gastos_mes = gastos.aggregate(total=Sum("cantidad"))["total"] or 0
+        saldo_mes = total_ingresos_mes - total_gastos_mes
+
+        total_ingresos = Ingreso.objects.aggregate(total=Sum("cantidad"))["total"] or 0
+        total_gastos = Gasto.objects.aggregate(total=Sum("cantidad"))["total"] or 0
         saldo = total_ingresos - total_gastos
 
         gastos_por_categoria = (
@@ -55,6 +59,9 @@ class HomeView(View):
 
         context = {
             "historial": historial,
+            "total_ingresos_mes": total_ingresos_mes,
+            "total_gastos_mes": total_gastos_mes,
+            "saldo_mes": saldo_mes,
             "total_ingresos": total_ingresos,
             "total_gastos": total_gastos,
             "saldo": saldo,
