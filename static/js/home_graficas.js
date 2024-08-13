@@ -29,10 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchChartData(urlGastosPorCategoria).then(chartData => {
     if (chartData) {
       new Chart(ctxGastos, {
-        type: 'pie',
+        type: 'bar',
         data: {
           labels: chartData.labels,
           datasets: [{
+            label: 'Gastos por Categoría',
             data: chartData.data,
             backgroundColor: chartData.labels.map(label => textToColor(label)),
           }]
@@ -48,6 +49,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 label: function (tooltipItem) {
                   return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' $';
                 }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Categorías'
+              }
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Monto ($)'
               }
             }
           }
