@@ -47,7 +47,7 @@
               <tbody>
                   {% for item in historial %}
                   <tr>
-                      <td>{{ item.fecha }}</td>
+                      <td>{{ item.fecha|date:"d-m-Y" }}</td>
                       {% if item.tipo == "Ingreso" %}
                       <td class="has-text-success">Ingreso</td>
                       <td>{{ item.categoria }}</td>
