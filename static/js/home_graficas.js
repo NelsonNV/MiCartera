@@ -3,6 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctxResumenMensual = document.getElementById('resumenMensualChart').getContext('2d');
   const ctxGastosMes = document.getElementById('gastosMesChart').getContext('2d');
 
+  // Función para generar un color hexadecimal a partir de un texto
+  const textToColor = (text) => {
+    const hash = Array.from(text).reduce((acc, char) => {
+      const charCode = char.charCodeAt(0);
+      return ((acc << 5) - acc) + charCode;
+    }, 0);
+
+    const color = (hash & 0x00FFFFFF).toString(16).padStart(6, '0');
+    return `#${color}`;
+  };
   // Función para cargar datos del gráfico desde la API
   const fetchChartData = async (url) => {
     try {
@@ -24,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
           labels: chartData.labels,
           datasets: [{
             data: chartData.data,
-            backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'],
+            backgroundColor: chartData.labels.map(label => textToColor(label)),
           }]
         },
         options: {
