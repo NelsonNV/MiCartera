@@ -29,7 +29,7 @@ class Producto(models.Model):
         return f"{self.nombre}"
 
 
-class alternativa(models.Model):
+class Alternativa(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     tienda = models.ForeignKey(Tiendas, on_delete=models.CASCADE)
     enlace = models.CharField(unique=True, max_length=50)
