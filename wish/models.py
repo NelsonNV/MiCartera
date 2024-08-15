@@ -34,7 +34,7 @@ class Alternativa(models.Model):
     tienda = models.ForeignKey(Tiendas, on_delete=models.CASCADE)
     enlace = models.CharField(unique=True, max_length=50)
     imagen = models.ImageField(blank=True, null=True)
-    costo = models.DecimalField(max_digits=10, max_length=100)
+    costo = models.DecimalField(max_digits=10, decimal_places=2)
     objects = models.Manager()
 
     def clean(self):
