@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 
 class Categoria(models.Model):
     nombre = models.CharField(unique=True, max_length=50)
+    objects = models.Manager()
 
     def __str__(self):
         return f"{self.nombre}"
