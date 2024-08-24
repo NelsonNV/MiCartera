@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-z+8ld$(tq*oc23%-(sy9#*c_)^+!hwbme_#kn%swlh!u-cx6%!
 DEBUG = True
 
 ALLOWED_HOSTS = ["micartera.onrender.com"]
-CSRF_TRUSTED_ORIGINS = ["micartera.onrender.com"]
+CSRF_TRUSTED_ORIGINS = ["https://micartera.onrender.com"]
 
 
 # Application definition
