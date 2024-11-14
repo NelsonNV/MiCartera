@@ -7,7 +7,7 @@ from django.contrib import messages
 
 class GastoView(View):
     def get_list(self, request):
-        gastos = Gasto.objects.all()
+        gastos = Gasto.objects.all().order_by("-fecha", "id").values()
         context = {
             "title": "Gastos",
             "title_singular": "Gasto",

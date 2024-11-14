@@ -7,7 +7,7 @@ from django.contrib import messages
 
 class IngresoView(View):
     def get_list(self, request):
-        ingresos = Ingreso.objects.all()
+        ingresos = Ingreso.objects.all().order_by("-fecha", "id").values()
         context = {
             "title": "Ingresos",
             "title_singular": "Ingreso",
