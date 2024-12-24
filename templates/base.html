@@ -27,18 +27,37 @@
 
             <div id="navbarMenu" class="navbar-menu">
                 <div class="navbar-end">
-                    <a class="navbar-item" href="{% url 'metodopago_list' %}">
-                        Método de Pago
-                    </a>
-                    <a class="navbar-item" href="{% url 'categoria_list' %}">
-                        Categorías
-                    </a>
-                    <a class="navbar-item" href="{% url 'subcategoria_list' %}">
-                        Subcategorías
-                    </a>
-                    <a class="navbar-item" href="{% url 'fuente_list' %}">
-                        Fuentes
-                    </a>
+                    <!-- Dropdown para Lista de Deseos -->
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Lista de Deseos
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a href="{% url 'wish_categoria' %}" class="navbar-item">
+                                Ver Categorías
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Dropdown para Gestión de Cartera -->
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Gestión de Cartera
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" href="{% url 'metodopago_list' %}">
+                                Método de Pago
+                            </a>
+                            <a class="navbar-item" href="{% url 'categoria_list' %}">
+                                Categorías
+                            </a>
+                            <a class="navbar-item" href="{% url 'subcategoria_list' %}">
+                                Subcategorías
+                            </a>
+                            <a class="navbar-item" href="{% url 'fuente_list' %}">
+                                Fuentes
+                            </a>
+                        </div>
+                    </div>
                     <a class="navbar-item" href="{% url 'ingreso_list' %}">
                         Ingresos
                     </a>
