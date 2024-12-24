@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load generate_table %}
+
+{% block content %}
+    <h1>Lista de {{ model_name_plural }}</h1>
+    {% if objects %}
+        {% render_table headers=table_headers fields=table_fields items=objects permiso=has_permission update_url=update_url_name delete_url=delete_url_name null=null_values %}
+    {% else %}
+        <p>No hay elementos disponibles.</p>
+    {% endif %}
+{% endblock %}
+
+

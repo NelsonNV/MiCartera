@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <h1>{{ view_title }}</h1>
+    <form method="post" enctype="multipart/form-data" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="button is-success my-2" type="submit">Guardar</button>
+    </form>
+
+{% endblock %}
