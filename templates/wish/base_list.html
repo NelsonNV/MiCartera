@@ -5,6 +5,7 @@
 
 {% block content %}
     <h1>Lista de {{ model_name_plural }}</h1>
+    <a class="button is-success my-3" href="{% url create_url_name %}">Agregar {{ model_name_plural }}</a>
     {% if objects %}
         {% render_table headers=table_headers fields=table_fields items=objects permiso=has_permission update_url=update_url_name delete_url=delete_url_name null=null_values %}
     {% else %}
