@@ -15,7 +15,9 @@ from wish.views.tiendas_views import (
 
 urlpatterns = [
     path("categorias/", CategoriaListView.as_view(), name="wish_categoria"),
-    path("categorias/crear/", CategoriaCreateView.as_view(), name="create_view_name"),
+    path(
+        "categorias/crear/", CategoriaCreateView.as_view(), name="wish_categoria_create"
+    ),
     path(
         "cate/upd/<int:pk>/",
         CategoriaUpdateView.as_view(),
