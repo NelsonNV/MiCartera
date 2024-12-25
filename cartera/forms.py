@@ -44,11 +44,17 @@ class FuenteForm(forms.ModelForm):
 
 
 class IngresoForm(forms.ModelForm):
+    fecha = forms.DateField(
+        widget=forms.DateInput(
+            format="%Y-%m-%d", attrs={"class": "input", "type": "date"}
+        ),
+        input_formats=["%Y-%m-%d"],
+    )
+
     class Meta:
         model = Ingreso
         fields = ["fecha", "fuente", "cantidad", "descripcion"]
         widgets = {
-            "fecha": forms.DateInput(attrs={"class": "input", "type": "date"}),
             "fuente": forms.Select(attrs={"class": "select2 input"}),
             "cantidad": forms.NumberInput(
                 attrs={"class": "input", "placeholder": "Cantidad", "step": "0.01"}
@@ -60,6 +66,13 @@ class IngresoForm(forms.ModelForm):
 
 
 class GastoForm(forms.ModelForm):
+    fecha = forms.DateField(
+        widget=forms.DateInput(
+            format="%Y-%m-%d", attrs={"class": "input", "type": "date"}
+        ),
+        input_formats=["%Y-%m-%d"],
+    )
+
     class Meta:
         model = Gasto
         fields = [
@@ -71,7 +84,6 @@ class GastoForm(forms.ModelForm):
             "descripcion",
         ]
         widgets = {
-            "fecha": forms.DateInput(attrs={"class": "input", "type": "date"}),
             "categoria": forms.Select(attrs={"class": "select", "id": "id_categoria"}),
             "subcategoria": forms.Select(
                 attrs={"class": "select", "id": "id_subcategoria"}

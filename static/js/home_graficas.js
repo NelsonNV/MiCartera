@@ -3,6 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctxResumenMensual = document.getElementById('resumenMensualChart').getContext('2d');
   const ctxGastosMes = document.getElementById('gastosMesChart').getContext('2d');
 
+  // Función para generar un color hexadecimal a partir de un texto
+  const textToColor = (text) => {
+    const hash = Array.from(text).reduce((acc, char) => {
+      const charCode = char.charCodeAt(0);
+      return ((acc << 5) - acc) + charCode;
+    }, 0);
+
+    const color = (hash & 0x00FFFFFF).toString(16).padStart(6, '0');
+    return `#${color}`;
+  };
   // Función para cargar datos del gráfico desde la API
   const fetchChartData = async (url) => {
     try {
@@ -19,12 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchChartData(urlGastosPorCategoria).then(chartData => {
     if (chartData) {
       new Chart(ctxGastos, {
-        type: 'pie',
+        type: 'bar',
         data: {
           labels: chartData.labels,
           datasets: [{
+            label: 'Gastos por Categoría',
             data: chartData.data,
-            backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'],
+            backgroundColor: chartData.labels.map(label => textToColor(label)),
           }]
         },
         options: {
@@ -38,6 +49,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 label: function (tooltipItem) {
                   return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' $';
                 }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Categorías'
+              }
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Monto ($)'
               }
             }
           }
