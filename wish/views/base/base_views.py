@@ -19,6 +19,7 @@ class BaseListView(ListView):
     has_permission = True
     null_values = None
     model_name_plural = "tabla"
+    image_fields = []
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -30,6 +31,7 @@ class BaseListView(ListView):
         context["has_permission"] = self.has_permission
         context["null_values"] = self.null_values
         context["model_name_plural"] = self.model_name_plural
+        context["image_fields"] = self.image_fields
         return context
 
 
