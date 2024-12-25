@@ -12,6 +12,12 @@ from wish.views.tiendas_views import (
     TiendasUpdateView,
     TiendasDeleteView,
 )
+from wish.views.productos_views import (
+    ProductoListView,
+    ProductoCreateView,
+    ProductoUpdateView,
+    ProductoDeleteView,
+)
 
 urlpatterns = [
     path("categorias/", CategoriaListView.as_view(), name="wish_categoria"),
@@ -40,5 +46,17 @@ urlpatterns = [
         "tiendas/<int:pk>/eliminar/",
         TiendasDeleteView.as_view(),
         name="wish_tiendas_delete",
+    ),
+    path("productos/", ProductoListView.as_view(), name="wish_producto"),
+    path("productos/crear/", ProductoCreateView.as_view(), name="wish_producto_create"),
+    path(
+        "productos/<int:pk>/editar/",
+        ProductoUpdateView.as_view(),
+        name="wish_producto_updates",
+    ),
+    path(
+        "productos/<int:pk>/eliminar/",
+        ProductoDeleteView.as_view(),
+        name="wish_producto_delete",
     ),
 ]
