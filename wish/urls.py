@@ -24,6 +24,12 @@ from wish.views.alternativa_views import (
     AlternativaUpdateView,
     AlternativaDeleteView,
 )
+from wish.views.deseo_views import (
+    DeseoListView,
+    DeseoCreateView,
+    DeseoUpdateView,
+    DeseoDeleteView,
+)
 
 urlpatterns = [
     path("categorias/", CategoriaListView.as_view(), name="wish_categoria"),
@@ -80,5 +86,17 @@ urlpatterns = [
         "alternativas/<int:pk>/eliminar/",
         AlternativaDeleteView.as_view(),
         name="wish_alternativa_delete",
+    ),
+    path("deseos/", DeseoListView.as_view(), name="wish_deseo"),
+    path("deseos/crear/", DeseoCreateView.as_view(), name="wish_deseo_create"),
+    path(
+        "deseos/<int:pk>/editar/",
+        DeseoUpdateView.as_view(),
+        name="wish_deseo_update",
+    ),
+    path(
+        "deseos/<int:pk>/eliminar/",
+        DeseoDeleteView.as_view(),
+        name="wish_deseo_delete",
     ),
 ]
