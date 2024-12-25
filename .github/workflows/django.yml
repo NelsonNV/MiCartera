@@ -40,6 +40,6 @@ jobs:
     - name: Run Test cartera
       run: |
         python manage.py test cartera
-    - name: Run Test cartera
+    - name: Run Test wish
       run: |
         python manage.py test wish
