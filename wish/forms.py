@@ -1,5 +1,6 @@
 from django import forms
 from wish.models import Categoria, Tiendas, Producto, Alternativa, Deseo
+from wish.widgets import BulmaFileInput
 
 
 class CategoriaForm(forms.ModelForm):
@@ -18,7 +19,7 @@ class TiendasForm(forms.ModelForm):
         widgets = {
             "nombre": forms.TextInput(attrs={"class": "input"}),
             "enlace": forms.URLInput(attrs={"class": "input"}),
-            "logo": forms.ClearableFileInput(attrs={"class": "file-input"}),
+            "logo": BulmaFileInput(attrs={"class": "file-input"}),
         }
 
 
@@ -28,7 +29,7 @@ class ProductoForm(forms.ModelForm):
         fields = ["nombre", "imagen"]
         widgets = {
             "nombre": forms.TextInput(attrs={"class": "input"}),
-            "imagen": forms.ClearableFileInput(attrs={"class": "file-input"}),
+            "imagen": BulmaFileInput(attrs={"class": "file-input"}),
         }
 
 
@@ -40,7 +41,7 @@ class AlternativaForm(forms.ModelForm):
             "producto": forms.Select(attrs={"class": "select"}),
             "tienda": forms.Select(attrs={"class": "select"}),
             "enlace": forms.URLInput(attrs={"class": "input"}),
-            "imagen": forms.ClearableFileInput(attrs={"class": "file-input"}),
+            "imagen": BulmaFileInput(attrs={"class": "file-input"}),
             "costo": forms.NumberInput(attrs={"class": "input"}),
         }
 
