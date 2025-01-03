@@ -1,103 +1,44 @@
-from cartera.forms import GastoForm
+from core.views import BaseListView, BaseCreateView, BaseUpdateView, BaseDeleteView
 from cartera.models import Gasto
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views import View
-from django.contrib import messages
+from cartera.forms import GastoForm
+from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
+
+class GastoListView(BaseListView):
+    model = Gasto
+    table_headers = ["Fecha", "Categoría", "Subcategoría", "Cantidad", "Método de Pago", "Descripción"]
+    table_fields = ["fecha", "categoria", "subcategoria", "cantidad", "metodo_pago", "descripcion"]
+    update_url_name = "gasto_update"
+    delete_url_name = "gasto_delete"
+    create_url_name = "gasto_create"
+    model_name_plural = "Gastos"
 
 
-class GastoView(View):
-    def get_list(self, request):
-        gastos = Gasto.objects.all().order_by("-fecha", "id").values()
-        context = {
-            "title": "Gastos",
-            "title_singular": "Gasto",
-            "create_url": "gasto_create",
-            "update_url": "gasto_update",
-            "delete_url": "gasto_delete",
-            "headers": [
-                "Fecha",
-                "Categoría",
-                "Subcategoría",
-                "Cantidad",
-                "Método de Pago",
-                "Descripción",
-            ],
-            "fields": [
-                "fecha",
-                "categoria",
-                "subcategoria",
-                "cantidad",
-                "metodo_pago",
-                "descripcion",
-            ],
-            "items": gastos,
-        }
-        return render(request, "list/gasto_list.html", context)
+class GastoCreateView(SuccessMessageMixin, BaseCreateView):
+    model = Gasto
+    form_class = GastoForm
+    success_url = reverse_lazy("gasto_list")
+    success_message = "Gasto creado exitosamente."
 
-    def get_create(self, request):
-        form = GastoForm()
-        return render(request, "formulario/gasto_form.html", {"form": form})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_gastos'] = True
+        return context
 
-    def get_update(self, request, pk):
-        gasto = get_object_or_404(Gasto, pk=pk)
-        form = GastoForm(instance=gasto)
-        return render(request, "formulario/gasto_form.html", {"form": form})
+class GastoUpdateView(SuccessMessageMixin, BaseUpdateView):
+    model = Gasto
+    form_class = GastoForm
+    success_url = reverse_lazy("gasto_list")
+    success_message = "Gasto actualizado exitosamente."
 
-    def get_delete(self, request, pk):
-        gasto = get_object_or_404(Gasto, pk=pk)
-        context = {
-            "title_singular": "Gasto",
-            "cancel_url": "gasto_list",
-        }
-        return render(request, "formulario/base_confirm_delete.html", context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_gastos'] = True
+        return context
 
-    def post_create(self, request):
-        form = GastoForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Gasto creado exitosamente.")
-            return redirect("gasto_list")
-        else:
-            messages.error(request, "Hubo un error al crear el gasto.")
-        return render(request, "formulario/gasto_form.html", {"form": form})
 
-    def post_update(self, request, pk):
-        gasto = get_object_or_404(Gasto, pk=pk)
-        form = GastoForm(request.POST, instance=gasto)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Gasto actualizado exitosamente.")
-            return redirect("gasto_list")
-        else:
-            messages.error(request, "Hubo un error al actualizar el gasto.")
-        return render(request, "formulario/gasto_form.html", {"form": form})
-
-    def post_delete(self, request, pk):
-        gasto = get_object_or_404(Gasto, pk=pk)
-        gasto.delete()
-        messages.success(request, "Gasto eliminado exitosamente.")
-        return redirect("gasto_list")
-
-    def dispatch(self, request, *args, **kwargs):
-        action = kwargs.pop("action", None)
-        pk = kwargs.get("pk", None)
-
-        if request.method.lower() == "get":
-            if action == "create":
-                return self.get_create(request)
-            elif action == "update":
-                return self.get_update(request, pk)
-            elif action == "delete":
-                return self.get_delete(request, pk)
-            else:
-                return self.get_list(request)
-
-        elif request.method.lower() == "post":
-            if action == "create":
-                return self.post_create(request)
-            elif action == "update":
-                return self.post_update(request, pk)
-            elif action == "delete":
-                return self.post_delete(request, pk)
-
-        return super().dispatch(request, *args, **kwargs)
+class GastoDeleteView(SuccessMessageMixin, BaseDeleteView):
+    model = Gasto
+    success_url = reverse_lazy("gasto_list")
+    success_message = "Gasto eliminado exitosamente."
+    list_url_name = "gasto_list"
