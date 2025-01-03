@@ -7,6 +7,6 @@
 <form method="post">
   {% csrf_token %}
   <button type="submit" class="button is-danger">Eliminar</button>
-  <a href="{% url cancel_url %}" class="button is-light">Cancelar</a>
+  <a href="{% url list_view_name %}" class="button is-light">Cancelar</a>
 </form>
 {% endblock %}
