@@ -85,14 +85,14 @@ class GastoForm(forms.ModelForm):
             "descripcion",
         ]
         widgets = {
-            "categoria": forms.Select(attrs={"class": "select", "id": "id_categoria"}),
+            "categoria": forms.Select(attrs={"class": "select2", "id": "id_categoria"}),
             "subcategoria": forms.Select(
                 attrs={"class": "select", "id": "id_subcategoria"}
             ),
             "cantidad": forms.NumberInput(
                 attrs={"class": "input", "placeholder": "Cantidad", "step": "0.01"}
             ),
-            "metodo_pago": forms.Select(attrs={"class": "select"}),
+            "metodo_pago": forms.Select(attrs={"class": "select2"}),
             "descripcion": forms.Textarea(
                 attrs={"class": "textarea", "placeholder": "Descripción", "rows": 3}
             ),
