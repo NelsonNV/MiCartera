@@ -35,9 +35,11 @@
             {% for tarjeta in saldo_por_tarjeta %}
               <li>
                 <strong>{{ tarjeta.tarjeta }}</strong>:
-                Ingresos: ${{ tarjeta.ingresos|floatformat:0|intcomma }},
-                Gastos: ${{ tarjeta.gastos|floatformat:0|intcomma }},
-                Saldo: ${{ tarjeta.saldo|floatformat:0|intcomma }}
+                <ul>
+                  <li>Ingresos: ${{ tarjeta.ingresos|floatformat:0|intcomma }}</li>
+                  <li>Gastos: ${{ tarjeta.gastos|floatformat:0|intcomma }}</li>
+                  <li>Saldo: ${{ tarjeta.saldo|floatformat:0|intcomma }}</li>
+                </ul>
               </li>
             {% empty %}
               <li>No hay datos disponibles para las tarjetas.</li>
