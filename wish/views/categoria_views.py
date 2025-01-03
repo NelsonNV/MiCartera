@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
 from wish.models import Categoria
-from wish.views.base.base_views import (
+from core.views import (
     BaseListView,
     BaseDetailView,
     BaseCreateView,

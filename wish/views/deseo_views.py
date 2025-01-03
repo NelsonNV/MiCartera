@@ -1,4 +1,4 @@
-from wish.views.base.base_views import (
+from core.views import (
     BaseCreateView,
     BaseDeleteView,
     BaseListView,

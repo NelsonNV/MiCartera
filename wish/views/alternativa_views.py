@@ -1,7 +1,7 @@
 from wish.models import Alternativa
 from wish.forms import AlternativaForm
 from django.urls import reverse_lazy
-from wish.views.base.base_views import (
+from core.views import (
     BaseListView,
     BaseCreateView,
     BaseUpdateView,
