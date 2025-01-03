@@ -35,7 +35,9 @@ class Ingreso(models.Model):
     fuente = models.ForeignKey(Fuente, on_delete=models.CASCADE)
     cantidad = models.DecimalField(max_digits=10, decimal_places=2)
     descripcion = models.TextField(blank=True, null=True)
-
+    tarjeta = models.ForeignKey(
+        "MetodoPago", on_delete=models.PROTECT, blank=True, null=True
+    )
     objects = models.Manager()
 
     def clean(self):

@@ -53,7 +53,7 @@ class IngresoForm(forms.ModelForm):
 
     class Meta:
         model = Ingreso
-        fields = ["fecha", "fuente", "cantidad", "descripcion"]
+        fields = ["fecha", "fuente", "cantidad", "descripcion", "tarjeta"]
         widgets = {
             "fuente": forms.Select(attrs={"class": "select2 input"}),
             "cantidad": forms.NumberInput(
@@ -62,6 +62,7 @@ class IngresoForm(forms.ModelForm):
             "descripcion": forms.Textarea(
                 attrs={"class": "textarea", "placeholder": "Descripción", "rows": 3}
             ),
+            "tarjeta": forms.Select(attrs={"class": "select2 input"}),
         }
 
 
