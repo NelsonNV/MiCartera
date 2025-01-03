@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
+{% block extra_css %}
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
 {% block content %}
     <h1>{{ view_title }}</h1>
     <form method="post" enctype="multipart/form-data" >
@@ -8,5 +13,15 @@
         {{ form.as_p }}
         <button class="button is-success my-2" type="submit">Guardar</button>
     </form>
+
+{% endblock %}
+{% block extra_js %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('.select2').select2();
+    });
+  </script>
 
 {% endblock %}
