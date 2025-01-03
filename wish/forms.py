@@ -1,6 +1,6 @@
 from django import forms
 from wish.models import Categoria, Tiendas, Producto, Alternativa, Deseo
-from wish.widgets import BulmaFileInput
+from core.widgets import BulmaFileInput
 
 
 class CategoriaForm(forms.ModelForm):
