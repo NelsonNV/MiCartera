@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 
 
 class BaseListView(ListView):
-    template_name = "wish/base_list.html"
+    template_name = "base_list.html"
     context_object_name = "objects"
     table_headers = []
     table_fields = []
@@ -41,17 +41,17 @@ class BaseDetailView(DetailView):
 
 
 class BaseCreateView(CreateView):
-    template_name = "wish/base_form.html"
+    template_name = "base_form.html"
     success_url = reverse_lazy("home")
 
 
 class BaseUpdateView(UpdateView):
-    template_name = "wish/base_form.html"
+    template_name = "base_form.html"
     success_url = reverse_lazy("home")
 
 
 class BaseDeleteView(DeleteView):
-    template_name = "wish/base_confirm_delete.html"
+    template_name = "base_confirm_delete.html"
     success_url = reverse_lazy("home")
 
     def get_context_data(self, **kwargs):
