@@ -34,11 +34,20 @@
           <ul>
             {% for tarjeta in saldo_por_tarjeta %}
               <li>
-                <strong>{{ tarjeta.tarjeta }}</strong>:
-                <ul>
-                  <li>Ingresos: ${{ tarjeta.ingresos|floatformat:0|intcomma }}</li>
-                  <li>Gastos: ${{ tarjeta.gastos|floatformat:0|intcomma }}</li>
-                  <li>Saldo: ${{ tarjeta.saldo|floatformat:0|intcomma }}</li>
+                <strong class="subtitle is-4">{{ tarjeta.tarjeta }}</strong>:
+                <ul class ="control m-2">
+                  <li class ="tags has-addons py-0 m-0">
+                    <span class="tag is-dark">Ingresos:</span>
+                    <span class="tag">${{ tarjeta.ingresos|floatformat:0|intcomma }}</span>
+                  </li>
+                  <li class ="tags has-addons py-0 m-0">
+                    <span class="tag is-dark">Gastos:</span>
+                    <span class ="tag is-danger">${{ tarjeta.gastos|floatformat:0|intcomma }}</span>
+                  </li>
+                  <li class ="tags has-addons py-0 m-0  ">
+                    <span class="tag is-dark">Saldo:</span>
+                    <span class="tag is-success"> ${{ tarjeta.saldo|floatformat:0|intcomma }}</span>
+                  </li>
                 </ul>
               </li>
             {% empty %}
