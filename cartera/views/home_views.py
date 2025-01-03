@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.db.models import Sum
 from django.http import JsonResponse
 from django.views import View
-from cartera.models import Ingreso, Gasto, Categoria
+from cartera.models import Ingreso, Gasto, Categoria, MetodoPago
 import datetime
 
 
@@ -14,6 +14,7 @@ class HomeView(View):
             day=1
         ) - datetime.timedelta(days=1)
 
+        # Calcular ingresos y gastos del mes
         ingresos = Ingreso.objects.filter(
             fecha__range=[first_day_of_month, last_day_of_month]
         )
@@ -25,16 +26,34 @@ class HomeView(View):
         total_gastos_mes = gastos.aggregate(total=Sum("cantidad"))["total"] or 0
         saldo_mes = total_ingresos_mes - total_gastos_mes
 
+        # Calcular ingresos y gastos totales
         total_ingresos = Ingreso.objects.aggregate(total=Sum("cantidad"))["total"] or 0
         total_gastos = Gasto.objects.aggregate(total=Sum("cantidad"))["total"] or 0
         saldo = total_ingresos - total_gastos
 
-        gastos_por_categoria = (
-            gastos.values("categoria__nombre")
-            .annotate(total=Sum("cantidad"))
-            .order_by("-total")
-        )
+        # Calcular saldo por tarjeta
+        saldo_por_tarjeta = []
+        tarjetas = MetodoPago.objects.all()
+        for tarjeta in tarjetas:
+            ingresos_tarjeta = (
+                Ingreso.objects.filter(tarjeta=tarjeta)
+                .aggregate(total=Sum("cantidad"))["total"]
+                or 0
+            )
+            gastos_tarjeta = (
+                Gasto.objects.filter(metodo_pago=tarjeta)
+                .aggregate(total=Sum("cantidad"))["total"]
+                or 0
+            )
+            saldo_tarjeta = ingresos_tarjeta - gastos_tarjeta
+            saldo_por_tarjeta.append({
+                "tarjeta": tarjeta.metodo,
+                "ingresos": ingresos_tarjeta,
+                "gastos": gastos_tarjeta,
+                "saldo": saldo_tarjeta,
+            })
 
+        # Crear historial combinado de ingresos y gastos
         historial = []
         for ingreso in ingresos:
             historial.append(
@@ -54,9 +73,9 @@ class HomeView(View):
                     "cantidad": gasto.cantidad,
                 }
             )
-
         historial = sorted(historial, key=lambda x: x["fecha"])
 
+        # Contexto para la plantilla
         context = {
             "historial": historial,
             "total_ingresos_mes": total_ingresos_mes,
@@ -65,11 +84,10 @@ class HomeView(View):
             "total_ingresos": total_ingresos,
             "total_gastos": total_gastos,
             "saldo": saldo,
-            "gastos_por_categoria": gastos_por_categoria,
+            "saldo_por_tarjeta": saldo_por_tarjeta,
             "today": today,
         }
         return render(request, "home.html", context)
-
 
 class GastosPorCategoriaView(View):
     def get(self, request):
