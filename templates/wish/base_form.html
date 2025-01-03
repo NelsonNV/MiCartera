@@ -24,4 +24,29 @@
     });
   </script>
 
+{% if is_gastos %}
+<script type="text/javascript">
+    var url = "{% url 'load_subcategorias' %}";
+    document.addEventListener('DOMContentLoaded', function () {
+        var categoriaSelect = document.getElementById('id_categoria');
+        var subcategoriaSelect = document.getElementById('id_subcategoria');
+
+        categoriaSelect.addEventListener('change', function () {
+            var categoriaId = this.value;
+
+            fetch(url + '?categoria_id=' + categoriaId)
+                .then(response => response.json())
+                .then(data => {
+                    subcategoriaSelect.innerHTML = '<option value="">---------</option>';
+                    data.forEach(function (item) {
+                        var option = document.createElement('option');
+                        option.value = item.id;
+                        option.textContent = item.nombre;
+                        subcategoriaSelect.appendChild(option);
+                    });
+                });
+        });
+    });
+</script>
+{% endif %}
 {% endblock %}
