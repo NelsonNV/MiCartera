@@ -14,24 +14,48 @@ class HomeView(View):
             day=1
         ) - datetime.timedelta(days=1)
 
-        # Calcular ingresos y gastos del mes
-        ingresos = Ingreso.objects.filter(
-            fecha__range=[first_day_of_month, last_day_of_month]
+        # Calcular ingresos, gastos y saldos para el mes
+        total_ingresos_mes, total_gastos_mes, ingresos_mes, gastos_mes = self._calcular_ingresos_y_gastos(
+            first_day_of_month, last_day_of_month
         )
-        gastos = Gasto.objects.filter(
-            fecha__range=[first_day_of_month, last_day_of_month]
-        )
-
-        total_ingresos_mes = ingresos.aggregate(total=Sum("cantidad"))["total"] or 0
-        total_gastos_mes = gastos.aggregate(total=Sum("cantidad"))["total"] or 0
         saldo_mes = total_ingresos_mes - total_gastos_mes
 
-        # Calcular ingresos y gastos totales
-        total_ingresos = Ingreso.objects.aggregate(total=Sum("cantidad"))["total"] or 0
-        total_gastos = Gasto.objects.aggregate(total=Sum("cantidad"))["total"] or 0
+        # Calcular ingresos, gastos y saldos totales
+        total_ingresos, total_gastos, _, _ = self._calcular_ingresos_y_gastos(
+            datetime.date.min, datetime.date.max
+        )
         saldo = total_ingresos - total_gastos
 
         # Calcular saldo por tarjeta
+        saldo_por_tarjeta = self._calcular_saldo_por_tarjeta()
+
+        # Crear historial combinado
+        historial = self._generar_historial(ingresos_mes, gastos_mes)
+
+        # Contexto para la plantilla
+        context = {
+            "historial": historial,
+            "total_ingresos_mes": total_ingresos_mes,
+            "total_gastos_mes": total_gastos_mes,
+            "saldo_mes": saldo_mes,
+            "total_ingresos": total_ingresos,
+            "total_gastos": total_gastos,
+            "saldo": saldo,
+            "saldo_por_tarjeta": saldo_por_tarjeta,
+            "today": today,
+        }
+        return render(request, "home.html", context)
+
+    def _calcular_ingresos_y_gastos(self, fecha_inicio, fecha_fin):
+        """Calcula los ingresos y gastos en un rango de fechas."""
+        ingresos = Ingreso.objects.filter(fecha__range=[fecha_inicio, fecha_fin])
+        gastos = Gasto.objects.filter(fecha__range=[fecha_inicio, fecha_fin])
+        total_ingresos = ingresos.aggregate(total=Sum("cantidad"))["total"] or 0
+        total_gastos = gastos.aggregate(total=Sum("cantidad"))["total"] or 0
+        return total_ingresos, total_gastos, ingresos, gastos
+
+    def _calcular_saldo_por_tarjeta(self):
+        """Calcula el saldo por tarjeta."""
         saldo_por_tarjeta = []
         tarjetas = MetodoPago.objects.all()
         for tarjeta in tarjetas:
@@ -52,8 +76,10 @@ class HomeView(View):
                 "gastos": gastos_tarjeta,
                 "saldo": saldo_tarjeta,
             })
+        return saldo_por_tarjeta
 
-        # Crear historial combinado de ingresos y gastos
+    def _generar_historial(self, ingresos, gastos):
+        """Crea un historial combinado de ingresos y gastos."""
         historial = []
         for ingreso in ingresos:
             historial.append(
@@ -73,22 +99,7 @@ class HomeView(View):
                     "cantidad": gasto.cantidad,
                 }
             )
-        historial = sorted(historial, key=lambda x: x["fecha"])
-
-        # Contexto para la plantilla
-        context = {
-            "historial": historial,
-            "total_ingresos_mes": total_ingresos_mes,
-            "total_gastos_mes": total_gastos_mes,
-            "saldo_mes": saldo_mes,
-            "total_ingresos": total_ingresos,
-            "total_gastos": total_gastos,
-            "saldo": saldo,
-            "saldo_por_tarjeta": saldo_por_tarjeta,
-            "today": today,
-        }
-        return render(request, "home.html", context)
-
+        return sorted(historial, key=lambda x: x["fecha"])
 class GastosPorCategoriaView(View):
     def get(self, request):
         mes = request.GET.get("mes", datetime.date.today().month)
