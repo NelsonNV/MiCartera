@@ -26,26 +26,32 @@
 
 {% if is_gastos %}
 <script type="text/javascript">
-    var url = "{% url 'load_subcategorias' %}";
-    document.addEventListener('DOMContentLoaded', function () {
-        var categoriaSelect = document.getElementById('id_categoria');
-        var subcategoriaSelect = document.getElementById('id_subcategoria');
+    $(document).ready(function () {
+        $('.select2').select2();
 
-        categoriaSelect.addEventListener('change', function () {
-            var categoriaId = this.value;
+        {% if is_gastos %}
+        var url = "{% url 'load_subcategorias' %}";
+
+        $('#id_categoria').on('change', function () {
+            var categoriaId = $(this).val();
 
             fetch(url + '?categoria_id=' + categoriaId)
                 .then(response => response.json())
                 .then(data => {
-                    subcategoriaSelect.innerHTML = '<option value="">---------</option>';
+                    var subcategoriaSelect = $('#id_subcategoria');
+                    subcategoriaSelect.empty();
+                    subcategoriaSelect.append('<option value="">---------</option>');
                     data.forEach(function (item) {
-                        var option = document.createElement('option');
-                        option.value = item.id;
-                        option.textContent = item.nombre;
-                        subcategoriaSelect.appendChild(option);
+                        subcategoriaSelect.append(
+                            $('<option>', {
+                                value: item.id,
+                                text: item.nombre
+                            })
+                        );
                     });
                 });
         });
+        {% endif %}
     });
 </script>
 {% endif %}
