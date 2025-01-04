@@ -104,19 +104,45 @@ class GastosPorCategoriaView(View):
     def get(self, request):
         mes = request.GET.get("mes", datetime.date.today().month)
         ano = request.GET.get("ano", datetime.date.today().year)
+        formato = request.GET.get("format")
 
         gastos = (
             Gasto.objects.filter(fecha__month=mes, fecha__year=ano)
-            .values("categoria__nombre")
+            .values("categoria__nombre", "subcategoria__nombre")
             .annotate(total=Sum("cantidad"))
             .order_by("-total")
         )
 
-        labels = [gasto["categoria__nombre"] for gasto in gastos]
-        data = [gasto["total"] for gasto in gastos]
+        data = {}
+        for gasto in gastos:
+            categoria = gasto["categoria__nombre"]
+            subcategoria = gasto["subcategoria__nombre"]
+            total = gasto["total"]
 
-        return JsonResponse({"labels": labels, "data": data})
+            if categoria not in data:
+                data[categoria] = {"total": 0, "subcategorias": {}}
+            data[categoria]["total"] += total
+            data[categoria]["subcategorias"][subcategoria] = total
 
+        if formato == "sunburst":
+            return JsonResponse(self.transformar_a_sunburst(data), safe=False)
+        return JsonResponse(data)
+
+    def transformar_a_sunburst(self, data):
+        """
+        Transforma los datos al formato requerido por el gráfico Sunburst.
+        """
+        return [
+            {
+                "name": categoria,
+                "value": float(detalles["total"]),
+                "children": [
+                    {"name": subcategoria, "value": float(valor)}
+                    for subcategoria, valor in detalles["subcategorias"].items()
+                ],
+            }
+            for categoria, detalles in data.items()
+        ]
 
 class ResumenAnualView(View):
     def get(self, request):
