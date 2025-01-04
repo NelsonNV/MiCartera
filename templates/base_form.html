@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block extra_css %}
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="{% static 'css/select2.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1>{{ view_title }}</h1>
+    <form method="post" enctype="multipart/form-data" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="button is-success my-2" type="submit">Guardar</button>
+    </form>
+
+{% endblock %}
+{% block extra_js %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('.select2').select2();
+    });
+  </script>
+
+{% if is_gastos %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.select2').select2();
+
+        {% if is_gastos %}
+        var url = "{% url 'load_subcategorias' %}";
+
+        $('#id_categoria').on('change', function () {
+            var categoriaId = $(this).val();
+
+            fetch(url + '?categoria_id=' + categoriaId)
+                .then(response => response.json())
+                .then(data => {
+                    var subcategoriaSelect = $('#id_subcategoria');
+                    subcategoriaSelect.empty();
+                    subcategoriaSelect.append('<option value="">---------</option>');
+                    data.forEach(function (item) {
+                        subcategoriaSelect.append(
+                            $('<option>', {
+                                value: item.id,
+                                text: item.nombre
+                            })
+                        );
+                    });
+                });
+        });
+        {% endif %}
+    });
+</script>
+{% endif %}
+{% endblock %}

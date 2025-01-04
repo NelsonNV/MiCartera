@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load generate_table %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.1/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bulma.css">
+
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bulma.js"></script>
+
+  <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+  <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.dataTables.js"></script>
+
+  <script defer src="{% static 'js/datatable.js' %}"></script>
+{% endblock %}
+
+{% block title %}
+Lista de {{ model_name_plural }} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <h1>Lista de {{ model_name_plural }}</h1>
+    <a class="button is-success my-3" href="{% url create_url_name %}">Agregar {{ model_name_plural }}</a>
+    {% if objects %}
+        {% render_table headers=table_headers fields=table_fields items=objects permiso=has_permission update_url=update_url_name delete_url=delete_url_name null=null_values image_fields=image_fields%}
+    {% else %}
+        <p>No hay elementos disponibles.</p>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

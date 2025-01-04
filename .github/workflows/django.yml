@@ -34,6 +34,12 @@ jobs:
     - name: Run Migrate
       run: |
         python manage.py migrate
+    - name: Run MakeMigrations wish
+      run: |
+       python manage.py makemigrations wish
     - name: Run Test cartera
       run: |
         python manage.py test cartera
+    - name: Run Test wish
+      run: |
+        python manage.py test wish
