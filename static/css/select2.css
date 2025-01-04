@@ -1,0 +1,94 @@
+/*
+   Estilos personalizados para Select2 con Bulma
+   Basado en el trabajo de Sam (https://codepen.io/ThatGuySam)
+*/
+
+$speed: 86ms;
+$family-sans-serif: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+$border: hsl(0, 0%, 86%);
+$radius: 3px;
+$border-hover: hsl(0, 0%, 71%);
+$primary: hsl(171, 100%, 41%);
+$size-5: 1.25rem;
+$size-4: 1.5rem;
+
+.select {
+    .select2-container {
+        .select2-selection {
+            transition: border-color $speed;
+            font-family: $family-sans-serif;
+            height: 2.285em;
+            line-height: 1.5;
+            font-size: 1rem;
+            outline: none !important;
+            display: inline-flex;
+            align-items: center;
+            width: 100%;
+            border-color: $border;
+            border-radius: $radius;
+            &:hover {
+                border-color: $border-hover;
+            }
+            .select2-selection__rendered {
+                padding-left: 0.75em;
+                padding-right: 0.75em;
+            }
+            .select2-selection__arrow {
+                visibility: hidden;
+            }
+        }
+
+        &.select2-container--open {
+            .select2-selection {
+                border-color: $primary;
+                &:hover {
+                    border-color: $primary;
+                }
+            }
+        }
+    }
+  
+    &.is-medium {
+        .select2-container {
+            .select2-selection {
+                font-size: $size-5;
+            }
+        }
+    }
+    &.is-large {
+        .select2-container {
+            .select2-selection {
+                font-size: $size-4;
+            }
+        }
+    }
+}
+
+.select2-container {
+    .select2-dropdown {
+        border-color: $primary;
+
+        .select2-search {
+            margin: 10px;
+            .select2-search__field {
+                // @extend .input;
+                border-radius: $radius !important;
+            }
+        }
+
+        .select2-results__options {
+            max-height: 210px;
+            .select2-results__option {
+                padding: 0.75em;
+                font-family: $family-sans-serif;
+                font-size: 1rem;
+
+                &.select2-results__option--highlighted {
+                    background: $primary;
+                }
+            }
+        }
+    }
+}
+
+
