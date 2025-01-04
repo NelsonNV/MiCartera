@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const ctxGastos = document.getElementById('gastosChart').getContext('2d');
+  const ctxGastos = document.getElementById('gastosChart');
   const ctxResumenMensual = document.getElementById('resumenMensualChart').getContext('2d');
   const ctxGastosMes = document.getElementById('gastosMesChart').getContext('2d');
 
@@ -25,55 +25,66 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  const gastosChart = echarts.init(ctxGastos);
   // Cargar y mostrar el gráfico de gastos por categoría
-  fetchChartData(urlGastosPorCategoria).then(chartData => {
+  fetchChartData(urlGastosPorCategoria+"?format=sunburst").then(chartData => {
     if (chartData) {
-      new Chart(ctxGastos, {
-        type: 'bar',
-        data: {
-          labels: chartData.labels,
-          datasets: [{
-            label: 'Gastos por Categoría',
-            data: chartData.data,
-            backgroundColor: chartData.labels.map(label => textToColor(label)),
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            tooltip: {
-              callbacks: {
-                label: function (tooltipItem) {
-                  return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' $';
-                }
-              }
-            }
-          },
-          scales: {
-            x: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Categorías'
-              }
-            },
-            y: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Monto ($)'
-              }
-            }
-          }
-        }
-      });
-    }
-  });
+      const datosSunburst = chartData; // Ya está en el formato correcto
+      console.log(datosSunburst);
 
-  // Cargar y mostrar el gráfico de resumen mensual
+      const option = {
+        title: {
+          text: 'Gastos por Categoría y Subcategoría',
+          left: 'center',
+          textStyle: {
+            fontSize: 16,
+            color: '#333'
+          }
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}: {c} $'
+        },
+        series: {
+          type: 'sunburst',
+          data: datosSunburst,
+          radius: [0, '80%'], // Ajusta el tamaño del gráfico
+          label: {
+            show: true,
+            fontSize: 12,
+            color: '#000',
+            rotate: 0 // El texto no rotará
+          },
+          itemStyle: {
+            borderWidth: 1,
+            borderColor: '#fff'
+          },
+          levels: [
+            {}, // Nivel base
+            {
+              r0: '0%',  // Radio interno
+              r: '40%',  // Radio externo para este nivel
+              label: {
+                fontSize: 12
+              }
+            },
+            {
+              r0: '40%',
+              r: '80%',
+              label: {
+                fontSize: 12,
+                position: 'outside' // Etiquetas fuera del gráfico
+              }
+            }
+          ]
+        }
+      };
+
+      gastosChart.setOption(option);
+    }else {
+  console.error('Los datos del gráfico están vacíos o son inválidos.');
+}
+  });
   fetchChartData(urlResumenAnual).then(chartData => {
     if (chartData) {
       new Chart(ctxResumenMensual, {
