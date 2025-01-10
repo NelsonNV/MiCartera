@@ -96,7 +96,7 @@
       <div class="column is-half">
         <div class="box">
           <h2 class="subtitle">Gastos por Categoría {{today|date:"F Y"}}</h2>
-          <canvas id="gastosChart"></canvas>
+<div id="gastosChart" style="width: 100%; height: 400px; background-color: #f9f9f9;"></div>
         </div>
       </div>
 
@@ -122,6 +122,7 @@
 
 {% block extra_js %}
 
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   const urlGastosPorCategoria = '{% url "gastos_por_categoria" %}';
