@@ -29,7 +29,7 @@ class CategoriaDetailView(BaseDetailView):
 class CategoriaCreateView(BaseCreateView):
     model = Categoria
     form_class = CategoriaForm
-    success_url = "wish_categoria"
+    success_url = reverse_lazy("wish_categoria")
 
 
 class CategoriaUpdateView(BaseUpdateView):
